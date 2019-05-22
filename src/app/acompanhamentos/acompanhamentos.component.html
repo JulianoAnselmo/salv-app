@@ -15,8 +15,51 @@
 <section class="content">
 
 
-  <button class="btn btn-success" (click)="reportAcompanhamentos()" id="printReport"><i
+  <button class="btn btn-success" id="printReport" data-toggle="modal" data-target="#modalReport"><i
       class="fa fa-print"></i></button>
+
+  <!--MODAL-->
+  <div class="modal fade" id="modalReport" tabindex="-1" role="dialog" aria-labelledby="modalReport" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form [formGroup]="dateReportForm" novalidate>
+            <div class="box-body">
+              <div>
+                <div class="col-sm-12 col-sm-12" id="formTitle">
+                  <h4 class="text-center"><strong>Relatório de acompanhamentos</strong></h4>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-xs-12" style="text-align: center; font-size: 11px; margin-left: -12px">
+                    Preencha apenas caso queira filtrar por data
+                  </div>
+                </div>
+                <hr class="col-6">
+                <div class="row">
+                  <div class="col-sm-6 col-xs-12">
+                    <label>De:</label>
+                    <input type="date" class="form-control pull-right" id="datepicker" formControlName="dateStart"
+                      max="2999-12-31">
+                  </div>
+                  <div class="col-sm-6 col-xs-12">
+                    <label>Até:</label>
+                    <input type="date" class="form-control pull-right" id="datepicker" formControlName="dateFinish"
+                      max="2999-12-31">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal"
+            (click)="reportAcompanhamentos()">Imprimir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIM MODAL-->
 
   <div id="content">
     <div class="form-group">

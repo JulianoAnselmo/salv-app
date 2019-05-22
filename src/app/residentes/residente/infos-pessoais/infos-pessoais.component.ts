@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Residente } from '../residente.model';
+import { Residente, Certidao_Casamento } from '../residente.model';
 import { ResidentesService } from '../../residentes.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -60,6 +60,7 @@ export class InfosPessoaisComponent implements OnInit {
 
   novoResidenteForm: FormGroup;
   pessoa: Pessoa
+  CERTIDAO_NASCIMENTO: Certidao_Casamento
   PESSOA_CODIGO: Number
 
   constructor(
@@ -138,8 +139,19 @@ export class InfosPessoaisComponent implements OnInit {
       //OUTROS INICIO
       CARTAO_SAMS: this.formBuilder.control(null, [], this.uniqueValidators.validateResidenteCartaoSAMS(this.PESSOA_CODIGO)),
       CARTAO_SUS: this.formBuilder.control(null, [], this.uniqueValidators.validateResidenteCartaoSUS(this.PESSOA_CODIGO)),
-      DATA_ACOLHIMENTO: this.formBuilder.control(null, [Validators.required])
+      DATA_ACOLHIMENTO: this.formBuilder.control(null, [Validators.required]),
       //OUTROS FINAL
+
+      // CERTIDOA CASAMENTO INICIO
+      CERTIDAO_CASAMENTO: this.formBuilder.group({
+        FOLHA: this.formBuilder.control(null, []),
+        LIVRO: this.formBuilder.control(null, []),
+        REGISTRO: this.formBuilder.control(null, []),
+        CIDADE: this.formBuilder.control(null, []),
+        ESTADO: this.formBuilder.control(null, []),
+        CONJUGE: this.formBuilder.control(null, []),
+      })
+      // CERTIDAO CASAMENTO FIM
     })
     this.spinner.show()
     setTimeout(() => {
@@ -147,10 +159,14 @@ export class InfosPessoaisComponent implements OnInit {
       this.residente = this.residentesService.residente
       delete this.pessoa.CODIGO // REMOVE CODIGO PARA INSERCAO NO FORM
       delete this.pessoa['STATUS'] // REMOVE STATUS NAO EXISTENTE NO MODEL
+      delete this.residente.CERTIDAO_CASAMENTO.CODIGO_RESIDENTE
+
       if (this.pessoa != undefined)
         this.novoResidenteForm.controls['PESSOA'].setValue(this.pessoa)
       if (this.residente != undefined) {
         this.novoResidenteForm.patchValue(this.residente)
+        this.novoResidenteForm.controls['CERTIDAO_CASAMENTO'].setValue(this.residente.CERTIDAO_CASAMENTO)
+        // this.novoResidenteForm.controls['CERTIDAO_CASAMENTO'].patchValue({ESTADO: "SP"})
       }
       this.spinner.hide()
     }, 2250)
@@ -170,10 +186,10 @@ export class InfosPessoaisComponent implements OnInit {
             })
           } else {
             this.residentesService.residenteById(this.route.snapshot.params['id'])
-            .subscribe(res => {
-              this.notificationService.notify(`Residente atualizado com sucesso!`)
-              this.residente = res
-            })
+              .subscribe(res => {
+                this.notificationService.notify(`Residente atualizado com sucesso!`)
+                this.residente = res
+              })
           }
         })
     } else {
@@ -182,4 +198,14 @@ export class InfosPessoaisComponent implements OnInit {
       this.notificationService.notify(`Preencha os campos obrigatórios!`)
     }
   }
+
+  verificaEstadoCivil() {
+    if (this.novoResidenteForm.get('PESSOA.ESTADO_CIVIL').value == 'S' ||
+      this.novoResidenteForm.get('PESSOA.ESTADO_CIVIL').value == null)
+      return true
+    else
+      return false
+  }
+
+
 }

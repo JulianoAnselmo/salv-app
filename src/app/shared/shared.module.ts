@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 //Components
 import { InputComponent } from './input/input.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { RadioComponent } from './radio/radio.component';
 
 //Services
 import { CookieService } from 'ngx-cookie-service';
@@ -69,6 +70,7 @@ import { ComplementoPipe } from './pipes/complemento.pipe';
         //Components
         InputComponent,
         SnackbarComponent,
+        RadioComponent,
         //Pipes
         ApelidoPipe,
         CartaoSamsPipe,
@@ -128,6 +130,7 @@ import { ComplementoPipe } from './pipes/complemento.pipe';
         //Components
         InputComponent,
         SnackbarComponent,
+        RadioComponent,
         //Pipes
         ApelidoPipe,
         CartaoSamsPipe,

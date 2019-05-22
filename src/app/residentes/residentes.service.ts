@@ -2,7 +2,7 @@ import { SALV_API } from './../app.api';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Residente, Pessoa, Residente_Convenio } from './residente/residente.model';
+import { Residente, Pessoa, Residente_Convenio, Certidao_Casamento } from './residente/residente.model';
 import { Familiar, Endereco, Telefone } from './residente/infos-familiar/familiar.model';
 import { Convenio } from './residente/infos-convenio/convenio.model';
 import { Beneficio } from './residente/infos-beneficios/beneficio.model';
@@ -89,8 +89,8 @@ export class ResidentesService {
         return this.http.delete<any>(`${SALV_API}/residente_convenio/${numeroConvenio}`)
     }
 
-    deleteResidente(id: string, motivo): Observable<any> {
-        return this.http.post<any>(`${SALV_API}/residente-inativar/${id}`, {MOTIVO_DESACOLHIMENTO: motivo})
+    deleteResidente(id: number, residente_delete): Observable<any> {
+        return this.http.post<any>(`${SALV_API}/residente-inativar/${id}`, residente_delete)
     }
 
     ativarResidente(id: string): Observable<any> {
@@ -105,19 +105,36 @@ export class ResidentesService {
         return this.http.get<Residente_Convenio[]>(`${SALV_API}/convenio`)
     }
 
-    createNewResidente(residente: Residente){
+    createNewResidente(residente: Residente) {
         return this.http.post<Pessoa>(`${SALV_API}/pessoa`, residente.PESSOA).switchMap(resPessoa => {
             residente.PESSOA_CODIGO = resPessoa.CODIGO
-            delete residente.PESSOA
 
-            return this.http.post<Residente>(`${SALV_API}/residente`, residente)
+            if (residente.PESSOA.ESTADO_CIVIL == 'S' || residente.PESSOA.ESTADO_CIVIL == null) {
+                delete residente.PESSOA
+                delete residente.CERTIDAO_CASAMENTO
+                return this.http.post<Residente>(`${SALV_API}/residente`, residente)
+            } else {
+                return this.http.post<Residente>(`${SALV_API}/residente`, residente).switchMap(resResidente => {
+                    delete residente.PESSOA
+                    residente.CERTIDAO_CASAMENTO.CODIGO_RESIDENTE = resResidente.CODIGO_RESIDENTE
+                    return this.http.post<Certidao_Casamento>(`${SALV_API}/certidao_casamento`, residente.CERTIDAO_CASAMENTO)
+                })
+            }
         })
     }
 
     updateResidente(dataForm: Residente, idResidente, idPessoa) {
         return this.http.put<Pessoa>(`${SALV_API}/pessoa/${idPessoa}`, dataForm.PESSOA).switchMap(res => {
-            delete dataForm.PESSOA
-            return this.http.put<Residente>(`${SALV_API}/residente/${idResidente}`, dataForm)
+            if (dataForm.PESSOA.ESTADO_CIVIL == 'S' || dataForm.PESSOA.ESTADO_CIVIL == null && dataForm.PESSOA.ESTADO_CIVIL != undefined) {
+                delete dataForm.PESSOA
+                delete dataForm.CERTIDAO_CASAMENTO
+                return this.http.put<Residente>(`${SALV_API}/residente/${idResidente}`, dataForm)
+            } else {
+                return this.http.put<Residente>(`${SALV_API}/residente/${idResidente}`, dataForm).switchMap(resResidente => {
+                    delete dataForm.PESSOA
+                    return this.http.put<Certidao_Casamento>(`${SALV_API}/certidao_casamento/${idResidente}`, dataForm.CERTIDAO_CASAMENTO)
+                })
+            }
         })
     }
 

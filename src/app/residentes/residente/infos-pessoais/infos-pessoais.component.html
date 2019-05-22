@@ -79,31 +79,68 @@
 
       <hr class="col-md-12">
 
-      <div class="col-md-12">
-        <div class="col-sm-12 col-xs-12">
-          <h4><strong>Certidão de Nascimento</strong></h4>
+      <ng-container
+        *ngIf="residente?.PESSOA.ESTADO_CIVIL == 'S' || residente?.PESSOA.ESTADO_CIVIL == null; else elseCertidao">
+
+
+        <div class="col-md-12">
+          <div class="col-sm-12 col-xs-12">
+            <h4><strong>Certidão de Nascimento</strong></h4>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Nº Certidão de Nascimento: </strong> {{residente?.NUMERO_CERTIDAO_NASCIMENTO | numeroCertNasc}} <br>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Folha: </strong> {{residente?.FOLHA_CERTIDAO_NASCIMENTO | folhaCertNasc}} <br>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Livro: </strong> {{residente?.LIVRO_CERTIDAO_NASCIMENTO | livroCertNasc}} <br>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Cidade: </strong> {{residente?.CIDADE_CERTIDAO_NASCIMENTO | cidadeCertNasc}} <br>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Estado: </strong> {{residente?.ESTADO_CERTIDAO_NASCIMENTO | estadoCertNasc}} <br>
+          </div>
         </div>
 
-        <div class="col-xs-4 col-xs-12">
-          <strong>Nº Certidão de Nascimento: </strong> {{residente?.NUMERO_CERTIDAO_NASCIMENTO | numeroCertNasc}} <br>
-        </div>
+      </ng-container>
+      <ng-template #elseCertidao>
+        <div class="col-md-12">
+          <div class="col-sm-12 col-xs-12">
+            <h4><strong>Certidão de Casamento</strong></h4>
+          </div>
 
-        <div class="col-xs-4 col-xs-12">
-          <strong>Folha: </strong> {{residente?.FOLHA_CERTIDAO_NASCIMENTO | folhaCertNasc}} <br>
-        </div>
+          <div class="col-xs-4 col-xs-12">
+            <strong>Folha: </strong> {{residente?.CERTIDAO_CASAMENTO.FOLHA | folhaCertNasc}} <br>
+          </div>
 
-        <div class="col-xs-4 col-xs-12">
-          <strong>Livro: </strong> {{residente?.LIVRO_CERTIDAO_NASCIMENTO | livroCertNasc}} <br>
-        </div>
+          <div class="col-xs-4 col-xs-12">
+            <strong>Livro: </strong> {{residente?.CERTIDAO_CASAMENTO.LIVRO | livroCertNasc}} <br>
+          </div>
 
-        <div class="col-xs-4 col-xs-12">
-          <strong>Cidade: </strong> {{residente?.CIDADE_CERTIDAO_NASCIMENTO | cidadeCertNasc}} <br>
-        </div>
+          <div class="col-xs-4 col-xs-12">
+            <strong>Registro: </strong> {{residente?.CERTIDAO_CASAMENTO.REGISTRO | numeroCertNasc}} <br>
+          </div>
 
-        <div class="col-xs-4 col-xs-12">
-          <strong>Estado: </strong> {{residente?.ESTADO_CERTIDAO_NASCIMENTO | estadoCertNasc}} <br>
+          <div class="col-xs-4 col-xs-12">
+            <strong>Cidade: </strong> {{residente?.CERTIDAO_CASAMENTO.CIDADE | cidadeCertNasc}} <br>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Estado: </strong> {{residente?.CERTIDAO_CASAMENTO.ESTADO | estadoCertNasc}} <br>
+          </div>
+
+          <div class="col-xs-4 col-xs-12">
+            <strong>Conjuge: </strong> {{residente?.CERTIDAO_CASAMENTO.CONJUGE}} <br>
+          </div>
         </div>
-      </div>
+      </ng-template>
 
       <hr class="col-md-12">
 
@@ -271,46 +308,97 @@
                 <!--INFORMAÇÕES PESSOAIS FINAL-->
 
                 <!--CERTIDÃO DE NASCIMENTO INICIO-->
-                <div class="col-sm-12 col-sm-12" id="formTitle">
-                  <h4><strong>Certidão de Nascimento </strong></h4>
-                </div>
+                <ng-container *ngIf="verificaEstadoCivil(); else elseCertidaoForm">
+                  <div class="col-sm-12 col-sm-12" id="formTitle">
+                    <h4><strong>Certidão de Nascimento </strong></h4>
+                  </div>
 
-                <div class="row">
-                  <div class="col-sm-4 col-sm-12" id="inputValidator">
-                    <salv-input-container errorMessage="" label="Número">
-                      <input type="text" mask="0*" class="form-control" formControlName="NUMERO_CERTIDAO_NASCIMENTO"
-                        placeholder="Número" autocomplete="off" maxlength="5">
-                    </salv-input-container>
+                  <div class="row">
+                    <div class="col-sm-4 col-sm-12" id="inputValidator">
+                      <salv-input-container errorMessage="" label="Número">
+                        <input type="text" mask="0*" class="form-control" formControlName="NUMERO_CERTIDAO_NASCIMENTO"
+                          placeholder="Número" autocomplete="off" maxlength="5">
+                      </salv-input-container>
+                    </div>
+                    <div class="col-sm-4 col-sm-12">
+                      <label>Folha </label>
+                      <input type="text" class="form-control" formControlName="FOLHA_CERTIDAO_NASCIMENTO"
+                        placeholder="Folha" autocomplete="off" maxlength="5">
+                    </div>
+                    <div class="col-sm-4 col-sm-12">
+                      <label>Livro </label>
+                      <input type="text" class="form-control" formControlName="LIVRO_CERTIDAO_NASCIMENTO"
+                        placeholder="Livro" autocomplete="off" maxlength="3">
+                    </div>
                   </div>
-                  <div class="col-sm-4 col-sm-12">
-                    <label>Folha </label>
-                    <input type="text" class="form-control" formControlName="FOLHA_CERTIDAO_NASCIMENTO"
-                      placeholder="Folha" autocomplete="off" maxlength="5">
+                  <br />
+                  <div class="row">
+                    <div class="col-sm-3 col-sm-12">
+                      <label>Cidade </label>
+                      <input type="text" class="form-control" formControlName="CIDADE_CERTIDAO_NASCIMENTO"
+                        placeholder="Cidade" autocomplete="off" maxlength="50">
+                    </div>
+                    <div class="col-sm-2 col-sm-12">
+                      <label>Estado </label>
+                      <select class="form-control" formControlName="ESTADO_CERTIDAO_NASCIMENTO">
+                        <option value="" label="Selecione" disabled selected="selected"></option>
+                        <option *ngFor="let estado of estados">{{estado}}</option>
+                      </select>
+                      <br>
+                    </div>
                   </div>
-                  <div class="col-sm-4 col-sm-12">
-                    <label>Livro </label>
-                    <input type="text" class="form-control" formControlName="LIVRO_CERTIDAO_NASCIMENTO"
-                      placeholder="Livro" autocomplete="off" maxlength="3">
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-sm-3 col-sm-12">
-                    <label>Cidade </label>
-                    <input type="text" class="form-control" formControlName="CIDADE_CERTIDAO_NASCIMENTO"
-                      placeholder="Cidade" autocomplete="off" maxlength="50">
-                  </div>
-                  <div class="col-sm-2 col-sm-12">
-                    <label>Estado </label>
-                    <select class="form-control" formControlName="ESTADO_CERTIDAO_NASCIMENTO">
-                      <option value="" label="Selecione" disabled selected="selected"></option>
-                      <option *ngFor="let estado of estados">{{estado}}</option>
-                    </select>
-                    <br>
-                  </div>
-                </div>
+                </ng-container>
                 <hr>
                 <!--CERTIDÃO DE NASCIMENTO FINAL-->
+
+                <ng-template #elseCertidaoForm>
+                  <!--CERTIDÃO DE CASAMENTO INICIO-->
+                  <div class="col-sm-12 col-sm-12" id="formTitle">
+                    <h4><strong>Certidão de Casamento </strong></h4>
+                  </div>
+
+                  <div formGroupName="CERTIDAO_CASAMENTO">
+                    <div class="row">
+                      <div class="col-sm-4 col-sm-12">
+                        <label>Folha </label>
+                        <input type="text" class="form-control" formControlName="FOLHA" placeholder="Folha"
+                          autocomplete="off" maxlength="5">
+                      </div>
+                      <div class="col-sm-4 col-sm-12">
+                        <label>Livro </label>
+                        <input type="text" class="form-control" formControlName="LIVRO" placeholder="Livro"
+                          autocomplete="off" maxlength="5">
+                      </div>
+                      <div class="col-sm-4 col-sm-12">
+                        <label>Registro </label>
+                        <input type="text" class="form-control" formControlName="REGISTRO" placeholder="Registro"
+                          autocomplete="off" maxlength="10">
+                      </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                      <div class="col-sm-3 col-sm-12">
+                        <label>Cidade </label>
+                        <input type="text" class="form-control" formControlName="CIDADE" placeholder="Cidade"
+                          autocomplete="off" maxlength="50">
+                      </div>
+                      <div class="col-sm-2 col-sm-12">
+                        <label>Estado </label>
+                        <select class="form-control" formControlName="ESTADO">
+                          <option value="" label="Selecione" disabled selected="true"></option>
+                          <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+                        </select>
+                        <br>
+                      </div>
+                      <div class="col-sm-4 col-sm-12">
+                        <label>Conjuge </label>
+                        <input type="text" class="form-control" formControlName="CONJUGE" placeholder="Conjuge"
+                          autocomplete="off" maxlength="200">
+                      </div>
+                    </div>
+                  </div>
+                  <!--CERTIDÃO DE CASAMENTO FINAL-->
+                </ng-template>
 
                 <!--SEÇÃO ELEITORAL INICIO-->
                 <div class="col-sm-12 col-sm-12" id="formTitle">

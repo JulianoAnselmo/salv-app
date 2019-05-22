@@ -75,7 +75,7 @@ export class NovoResidenteComponent implements OnInit {
   pessoa: Pessoa
   residente: Residente
 
-  teste
+  public verificaEstadoCivil$: boolean = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -150,8 +150,18 @@ export class NovoResidenteComponent implements OnInit {
       //OUTROS INICIO
       CARTAO_SAMS: this.formBuilder.control(null, [], this.uniqueValidators.validateResidenteCartaoSAMS(null)),
       CARTAO_SUS: this.formBuilder.control(null, [], this.uniqueValidators.validateResidenteCartaoSUS(null)),
-      DATA_ACOLHIMENTO: this.formBuilder.control(null, [Validators.required])
+      DATA_ACOLHIMENTO: this.formBuilder.control(null, [Validators.required]),
       //OUTROS FINAL
+
+      // CERTIDOA CASAMENTO INICIO
+      CERTIDAO_CASAMENTO: this.formBuilder.group({
+        FOLHA: this.formBuilder.control(null, []),
+        LIVRO: this.formBuilder.control(null, []),
+        REGISTRO: this.formBuilder.control(null, []),
+        CIDADE: this.formBuilder.control(null, []),
+        ESTADO: this.formBuilder.control(null, []),
+        CONJUGE: this.formBuilder.control(null, []),
+      })
     })
 
     if (this.pessoa != undefined)
@@ -159,6 +169,14 @@ export class NovoResidenteComponent implements OnInit {
     this.spinner.hide()
     if (this.residente != undefined)
       this.novoResidenteForm.patchValue(this.residente)
+  }
+
+  verificaEstadoCivil() {
+    if (this.novoResidenteForm.get('PESSOA.ESTADO_CIVIL').value == 'S' ||
+      this.novoResidenteForm.get('PESSOA.ESTADO_CIVIL').value == null)
+      return true
+    else
+      return false
   }
 
   novoResidente(residente: Residente) {

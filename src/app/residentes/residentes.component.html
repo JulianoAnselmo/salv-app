@@ -94,8 +94,8 @@
             <td>{{residente.RESIDENTE_RG | rg}}</td>
 
             <td>
-              <button type="submit" class="btn btn-danger botao"
-                (click)="deleteResidente(residente.CODIGO); $event.stopPropagation()">Inativar</button>
+              <button type="submit" class="btn btn-danger botao" data-toggle="modal"
+                (click)="getResidenteID(residente.CODIGO);" data-target="#deletarResidente">Inativar</button>
               <!-- <a type="submit" class="btn btn-warning botao"
                 [routerLink]="['/editar-residente', residente.CODIGO_RESIDENTE]">Editar</a> -->
               <a type="submit" class="btn btn-success botao" [routerLink]="['/residentes', residente.CODIGO]">+
@@ -147,3 +147,42 @@
   </div>
   <!-- /.row -->
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="deletarResidente" tabindex="-1" role="dialog" aria-labelledby="deletarResidenteLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="col-sm-12 col-sm-12" id="formTitle">
+          <h4 class="text-center"><strong>Deseja inativar o residente?</strong></h4>
+        </div>
+        <form [formGroup]="deleteResidenteForm" novalidate>
+          <div class="row">
+            <div class="col-md-6">
+              <salv-input-container errorMessage="Campo Obrigatório" label="Motivo do Desacolhimento">
+                <span class="text-danger">*</span>
+                <input type="text" class="form-control" formControlName="MOTIVO_DESACOLHIMENTO"
+                  placeholder="Motivo do Desacolhimento" maxlength="500">
+              </salv-input-container>
+            </div>
+            <div class="col-md-6">
+              <salv-input-container errorMessage="Campo Obrigatório" label="Data de Desacolhimento">
+                <span class="text-danger">*</span>
+                <div class="input-group date">
+                  <input type="date" max="2999-12-31" class="form-control pull-right" id="datepicker"
+                    formControlName="DATA_DESACOLHIMENTO">
+                </div>
+              </salv-input-container>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary botao" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success botao" data-dismiss="modal" (click)="deleteResidente(deleteResidenteForm.value)"
+          [disabled]="!deleteResidenteForm.valid">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@
               "./node_modules/jvectormap/jquery-jvectormap.css",
               "./node_modules/admin-lte/dist/css/AdminLTE.min.css",
               "./node_modules/admin-lte/dist/css/skins/skin-green.min.css",
+              "./node_modules/admin-lte/plugins/iCheck/minimal/minimal.css",
               "./node_modules/select2/dist/css/select2.min.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/styles.css"

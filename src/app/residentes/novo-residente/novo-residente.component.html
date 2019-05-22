@@ -58,7 +58,7 @@
               <div class="col-sm-3 col-sm-12" formGroupName="PESSOA">
                 <label>Estado Civil </label>
                 <select class="form-control" formControlName="ESTADO_CIVIL">
-                    <option [ngValue]="null">Selecione</option>
+                  <option [ngValue]="null">Selecione</option>
                   <option *ngFor="let estadoCivil of estadosCivil" [value]="estadoCivil.value">{{estadoCivil.option}}
                   </option>
                 </select>
@@ -66,7 +66,7 @@
               <div class="col-sm-3 col-sm-12" formGroupName="PESSOA">
                 <label>Sexo</label>
                 <select class="form-control" formControlName="SEXO">
-                    <option [ngValue]="null">Selecione</option>
+                  <option [ngValue]="null">Selecione</option>
                   <option *ngFor="let sexo of sexos" [value]="sexo.value">{{sexo.option}}</option>
                 </select>
 
@@ -78,14 +78,14 @@
               <div class="col-sm-4 col-sm-12" formGroupName="PESSOA">
                 <label>Religião </label>
                 <select class="form-control" formControlName="RELIGIAO">
-                    <option [ngValue]="null">Selecione</option>
+                  <option [ngValue]="null">Selecione</option>
                   <option *ngFor="let religiao of religioes" [value]="religiao.value">{{religiao.option}}</option>
                 </select>
               </div>
               <div class="col-sm-4 col-sm-12" formGroupName="PESSOA">
                 <label>Escolaridade </label>
                 <select class="form-control" formControlName="ESCOLARIDADE">
-                    <option [ngValue]="null">Selecione</option>
+                  <option [ngValue]="null">Selecione</option>
                   <option *ngFor="let escolaridade of escolaridades" [value]="escolaridade.value">
                     {{escolaridade.option}}</option>
                 </select>
@@ -103,46 +103,98 @@
             <!--INFORMAÇÕES PESSOAIS FINAL-->
 
             <!--CERTIDÃO DE NASCIMENTO INICIO-->
-            <div class="col-sm-12 col-sm-12" id="formTitle">
-              <h4><strong>Certidão de Nascimento </strong></h4>
-            </div>
+            <ng-container *ngIf="verificaEstadoCivil(); else elseCertidao">
+              <div class="col-sm-12 col-sm-12" id="formTitle">
+                <h4><strong>Certidão de Nascimento </strong></h4>
+              </div>
 
-            <div class="row">
-              <div class="col-sm-4 col-sm-12" id="inputValidator">
-                <salv-input-container errorMessage="" label="Número">
-                  <input type="text" mask="0*" class="form-control" formControlName="NUMERO_CERTIDAO_NASCIMENTO"
-                    placeholder="Número" autocomplete="off" maxlength="5">
-                </salv-input-container>
+              <div class="row">
+                <div class="col-sm-4 col-sm-12" id="inputValidator">
+                  <salv-input-container errorMessage="" label="Número">
+                    <input type="text" mask="0*" class="form-control" formControlName="NUMERO_CERTIDAO_NASCIMENTO"
+                      placeholder="Número" autocomplete="off" maxlength="5">
+                  </salv-input-container>
+                </div>
+                <div class="col-sm-4 col-sm-12">
+                  <label>Folha </label>
+                  <input type="text" class="form-control" formControlName="FOLHA_CERTIDAO_NASCIMENTO"
+                    placeholder="Folha" autocomplete="off" maxlength="5">
+                </div>
+                <div class="col-sm-4 col-sm-12">
+                  <label>Livro </label>
+                  <input type="text" class="form-control" formControlName="LIVRO_CERTIDAO_NASCIMENTO"
+                    placeholder="Livro" autocomplete="off" maxlength="3">
+                </div>
               </div>
-              <div class="col-sm-4 col-sm-12">
-                <label>Folha </label>
-                <input type="text" class="form-control" formControlName="FOLHA_CERTIDAO_NASCIMENTO" placeholder="Folha"
-                  autocomplete="off" maxlength="5">
-              </div>
-              <div class="col-sm-4 col-sm-12">
-                <label>Livro </label>
-                <input type="text" class="form-control" formControlName="LIVRO_CERTIDAO_NASCIMENTO" placeholder="Livro"
-                  autocomplete="off" maxlength="3">
-              </div>
-            </div>
-            <br />
-            <div class="row">
-              <div class="col-sm-3 col-sm-12">
-                <label>Cidade </label>
-                <input type="text" class="form-control" formControlName="CIDADE_CERTIDAO_NASCIMENTO"
-                  placeholder="Cidade" autocomplete="off" maxlength="50">
-              </div>
-              <div class="col-sm-2 col-sm-12">
-                <label>Estado </label>
-                <select class="form-control" formControlName="ESTADO_CERTIDAO_NASCIMENTO">
+              <br />
+              <div class="row">
+                <div class="col-sm-3 col-sm-12">
+                  <label>Cidade </label>
+                  <input type="text" class="form-control" formControlName="CIDADE_CERTIDAO_NASCIMENTO"
+                    placeholder="Cidade" autocomplete="off" maxlength="50">
+                </div>
+                <div class="col-sm-2 col-sm-12">
+                  <label>Estado </label>
+                  <select class="form-control" formControlName="ESTADO_CERTIDAO_NASCIMENTO">
                     <option [ngValue]="null">Selecione</option>
-                  <option *ngFor="let estado of estados">{{estado}}</option>
-                </select>
-                <br>
+                    <option *ngFor="let estado of estados">{{estado}}</option>
+                  </select>
+                  <br>
+                </div>
               </div>
-            </div>
+              <!--CERTIDÃO DE NASCIMENTO FINAL-->
+            </ng-container>
+
+            <ng-template #elseCertidao>
+              <!--CERTIDÃO DE CASAMENTO INICIO-->
+              <div class="col-sm-12 col-sm-12" id="formTitle">
+                <h4><strong>Certidão de Casamento </strong></h4>
+              </div>
+
+              <div formGroupName="CERTIDAO_CASAMENTO">
+                <div class="row">
+                  <div class="col-sm-4 col-sm-12">
+                    <label>Folha </label>
+                    <input type="text" class="form-control" formControlName="FOLHA" placeholder="Folha"
+                      autocomplete="off" maxlength="5">
+                  </div>
+                  <div class="col-sm-4 col-sm-12">
+                    <label>Livro </label>
+                    <input type="text" class="form-control" formControlName="LIVRO" placeholder="Livro"
+                      autocomplete="off" maxlength="5">
+                  </div>
+                  <div class="col-sm-4 col-sm-12">
+                    <label>Registro </label>
+                    <input type="text" class="form-control" formControlName="REGISTRO" placeholder="Registro"
+                      autocomplete="off" maxlength="10">
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-sm-3 col-sm-12">
+                    <label>Cidade </label>
+                    <input type="text" class="form-control" formControlName="CIDADE" placeholder="Cidade"
+                      autocomplete="off" maxlength="50">
+                  </div>
+                  <div class="col-sm-2 col-sm-12">
+                    <label>Estado </label>
+                    <select class="form-control" formControlName="ESTADO">
+                      <option [ngValue]="null">Selecione</option>
+                      <option *ngFor="let estado of estados">{{estado}}</option>
+                    </select>
+                    <br>
+                  </div>
+                  <div class="col-sm-4 col-sm-12">
+                    <label>Conjuge </label>
+                    <input type="text" class="form-control" formControlName="CONJUGE" placeholder="Conjuge"
+                      autocomplete="off" maxlength="200">
+                  </div>
+                </div>
+              </div>
+              <!--CERTIDÃO DE CASAMENTO FINAL-->
+            </ng-template>
+
             <hr>
-            <!--CERTIDÃO DE NASCIMENTO FINAL-->
 
             <!--SEÇÃO ELEITORAL INICIO-->
             <div class="col-sm-12 col-sm-12" id="formTitle">
@@ -203,7 +255,7 @@
               <div class="col-sm-4 col-sm-12">
                 <label>Situação </label>
                 <select class="form-control" formControlName="SITUACAO_INSS">
-                    <option [ngValue]="null">Selecione</option>
+                  <option [ngValue]="null">Selecione</option>
                   <option *ngFor="let situacao of situacoesInss" [value]="situacao.value">{{situacao.option}}</option>
                 </select>
               </div>

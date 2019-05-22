@@ -34,6 +34,15 @@ export interface Residente {
         DATA_NASCIMENTO: string
         RELIGIAO: string,
         ESCOLARIDADE: string
+    },
+    CERTIDAO_CASAMENTO: {
+        CODIGO_RESIDENTE: number,
+        FOLHA: string,
+        LIVRO: string,
+        REGISTRO: string,
+        CIDADE: string,
+        ESTADO: string,
+        CONJUGE: string
     }
 }
 
@@ -56,4 +65,19 @@ export interface Residente_Convenio {
     TITULAR_CONVENIO: string,
     PARENTESCO_TITULAR: string,
     CONVENIO_CODIGO: number
+}
+
+export interface Residente_delete {
+    MOTIVO_DESACOLHIMENTO: string,
+    DATA_DESACOLHIMENTO: string
+}
+
+export interface Certidao_Casamento {
+    CODIGO_RESIDENTE: number,
+    FOLHA: string,
+    LIVRO: string,
+    REGISTRO: string,
+    CIDADE: string,
+    ESTADO: string,
+    CONJUGE: string
 }

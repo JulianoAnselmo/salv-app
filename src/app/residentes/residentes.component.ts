@@ -1,10 +1,11 @@
 import { DialogConfirmService } from './dialog-confirm.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ResidentesService } from './residentes.service';
-import { Residente, Pessoa } from './residente/residente.model';
+import { Residente, Pessoa, Residente_delete } from './residente/residente.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NotificationService } from '../shared/notification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'salv-residentes',
@@ -29,10 +30,20 @@ export class ResidentesComponent implements OnInit {
 
   residentes: Residente[] = []
 
+  codigoResidenteDeletar: number
+
+  deleteResidenteForm: FormGroup
+
   public Desativados
   public filter
 
-  constructor(private residentesService: ResidentesService, private dialogConfirmService: DialogConfirmService, private notificationService: NotificationService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private residentesService: ResidentesService,
+    private dialogConfirmService: DialogConfirmService,
+    private notificationService: NotificationService,
+    private spinner: NgxSpinnerService,
+    private formBuilder: FormBuilder,
+  ) { }
 
   paginaAtual: number = 1;
   ngOnInit() {
@@ -43,8 +54,14 @@ export class ResidentesComponent implements OnInit {
         this.residentes = residentes
         console.log(residentes)
       })
-    // limpar os dados armazenados no services toda vez que for inicializado
-    this.residentesService.clearDataResidente()
+      // limpar os dados armazenados no services toda vez que for inicializado
+      this.residentesService.clearDataResidente()
+
+    this.deleteResidenteForm = this.formBuilder.group({
+      MOTIVO_DESACOLHIMENTO: this.formBuilder.control(null, [Validators.required]),
+      DATA_DESACOLHIMENTO: this.formBuilder.control(null, [Validators.required])
+    })
+
   }
 
   residentesInativoss() {
@@ -55,21 +72,19 @@ export class ResidentesComponent implements OnInit {
       })
   }
 
-  deleteResidente(id: string): void {
-    this.dialogConfirmService.confirm(`Deseja inativar o residente?`)
-      .then((isTrue) => {
-        if (isTrue) {
-          this.dialogConfirmService.prompt(`Informe o motivo do desacolhimento`)
-          .then(motivo => {
-            this.residentesService.deleteResidente(id, motivo)
-            .subscribe(result => {
-              this.residentesService.residentes()
-                .subscribe(residentes => this.residentes = residentes)
-              this.notificationService.notify(`Residente excluido com sucesso!`)
-            })
-          })
-        }
+  deleteResidente(residente_delete: Residente_delete): void {
+    this.residentesService.deleteResidente(this.codigoResidenteDeletar, residente_delete)
+      .subscribe(result => {
+        this.residentesService.residentes()
+          .subscribe(residentes => this.residentes = residentes)
+        this.deleteResidenteForm.reset()
+        this.notificationService.notify(`Residente excluido com sucesso!`)
       })
+
+  }
+
+  getResidenteID(codigoResidente: number) {
+    this.codigoResidenteDeletar = codigoResidente
   }
 
   ativarResidente(id: string): void {
