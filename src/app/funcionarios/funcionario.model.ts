@@ -37,7 +37,8 @@ export interface Funcionario {
         ESTADO: string,
         CEP: string,
         REFERENCIA: string
-    }
+    },
+    
 }
 
 export interface Pessoa {
@@ -86,6 +87,14 @@ export interface Endereco {
 export interface Endereco_Pessoa {
     PESSOA_CODIGO: number,
     ENDERECO_CODIGO: number
+}
+
+export interface Conta_Bancaria_Funcionario{
+
+    CODIGO_FUNCIONARIO: number,
+    BANCO: string,
+    AGENCIA: string,
+    CONTA: string
 }
 
 export interface FuncionarioQuery {

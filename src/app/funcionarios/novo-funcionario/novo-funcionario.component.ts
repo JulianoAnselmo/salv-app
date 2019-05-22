@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
-import { Funcionario } from './../funcionario.model'
+import { Pessoa } from './../../residentes/residente/residente.model';
+import { Component, OnInit, EventEmitter, Input} from '@angular/core';
+import { Funcionario, Conta_Bancaria_Funcionario } from './../funcionario.model'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FuncionariosService } from './../funcionarios.service'
@@ -21,6 +22,7 @@ import { UniqueValuesValidators } from 'src/app/shared/validators/unique-values/
   ]
 })
 export class NovoFuncionarioComponent implements OnInit {
+  @Input() funcionario: Funcionario
 
   novoFuncionarioState = 'ready'
   estados = [
@@ -57,11 +59,16 @@ export class NovoFuncionarioComponent implements OnInit {
   ];
 
   novoFuncionarioForm: FormGroup
-  funcionario: Funcionario
+  
+  conta: Conta_Bancaria_Funcionario
+  codigoF 
+  
 
   constructor(private fb: FormBuilder, private fs: FuncionariosService, private router: Router, private ns: NotificationService, private uniqueValidators: UniqueValuesValidators) { }
 
   ngOnInit() {
+
+   
 
     this.novoFuncionarioForm = this.fb.group({
       //PESSOA
@@ -80,6 +87,15 @@ export class NovoFuncionarioComponent implements OnInit {
         DDD: this.fb.control(null, [Validators.required, Validators.minLength(2), Validators.maxLength(3)]),
         NUMERO: this.fb.control(null, [Validators.required, Validators.minLength(8), Validators.maxLength(9)])
       }),
+
+      CONTA: this.fb.group({
+
+        BANCO: this.fb.control(null, [Validators.required]),
+        AGENCIA: this.fb.control(null, [Validators.required]),
+        CONTA: this.fb.control(null, [Validators.required])
+
+      }),
+     
       ENDERECO: this.fb.group({
         ENDERECO: this.fb.control(null, [Validators.required]),
         NUMERO: this.fb.control(null, [Validators.required]),
@@ -94,6 +110,7 @@ export class NovoFuncionarioComponent implements OnInit {
       DATA_ADMISSAO: this.fb.control(null, [Validators.required])
     })
   }
+  
 
   novoFuncionario(funcionario: Funcionario) {
     this.fs.createNewEmployee(funcionario.PESSOA, funcionario.TELEFONE, funcionario.ENDERECO, funcionario)
@@ -104,10 +121,27 @@ export class NovoFuncionarioComponent implements OnInit {
             this.ns.notify(`Houve um erro! ${error.message}`)
           })
         } else {
+          this.codigoF = res.CODIGO_FUNCIONARIO
           let funcionario = res.CODIGO_FUNCIONARIO
           this.router.navigate([`/funcionarios/${funcionario}`])
           this.ns.notify(`Funcionário inserido com sucesso!`)
         }
       })
+  }
+ 
+  novaContaBancariaFuncionario(conta){
+     this.fs.novaContaBancaria(this.funcionario.CODIGO_FUNCIONARIO, this.novoFuncionarioForm.value.CONTA).subscribe(res =>{
+      console.log("dados conta", conta)
+      if (res['errors']) {
+        res['errors'].forEach(error => {
+
+          console.log('Houve um erro!', error)
+          this.ns.notify(`Houve um erro! ${error.message}`)
+        })
+      } else {
+              this.ns.notify(`Funcionário inserido com sucesso!`)
+      }
+
+    })
   }
 }

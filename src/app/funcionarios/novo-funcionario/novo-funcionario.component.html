@@ -185,10 +185,35 @@
                 <input type="text" class="form-control" formControlName="REFERENCIA" placeholder="Referência"
                   autocomplete="off" maxlength="100">
               </div>
+
+              <div class="col-sm-3 col-sm-12" formGroupName="CONTA">
+                <label>Banco</label>
+                <input type="text" class="form-control" formControlName="BANCO" placeholder="Banco"
+                  autocomplete="off" maxlength="100">
+              </div>
+
+              <div class="col-sm-3 col-sm-12" formGroupName="CONTA">
+                <label>Agência</label>
+                <input type="text" class="form-control" formControlName="AGENCIA" placeholder="Agência"
+                  autocomplete="off" maxlength="20">
+              </div>
+
+              <div class="col-sm-3 col-sm-12" formGroupName="CONTA">
+                <label>Conta</label>
+                <input type="text" class="form-control" formControlName="CONTA" placeholder="Conta"
+                  autocomplete="off" maxlength="20">
+              </div>
+
+
+
+
+
             </div>
+
+
             <div class="col-sm-12 col-sm-12">
               <br>
-              <button (click)="novoFuncionario(novoFuncionarioForm.value)" style="margin-left: 10px"
+              <button (click)="novoFuncionario(novoFuncionarioForm.value); novaContaBancariaFuncionario()" style="margin-left: 10px"
                 class="btn btn-success botao pull-right" [disabled]="!novoFuncionarioForm.valid">Finalizar
                 cadastro</button>
             </div>
