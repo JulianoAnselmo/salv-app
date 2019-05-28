@@ -68,11 +68,32 @@
 
 
       <!-- FILTRO -->
+      <div class="btn-group pull-right" style="margin-right: 40px; margin-left: 40px">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Filtro</button>
 
+        <ul class="dropdown-menu" role="menu">
+          <form [formGroup]="dateForm" novalidate>
+            <div class="col-sm-12 col-xs-12">  
+              <label>De:</label>
+              <input type="date" class="form-control pull-right" id="datepicker" formControlName="dateStart"
+                max="2999-12-31">
+            </div>
+            <div class="col-sm-12 col-xs-12" style="margin: 5px; margin-left: 0px">
+              <label>Até:</label>
+              <input type="date" class="form-control pull-right" id="datepicker" formControlName="dateFinish"
+                max="2999-12-31">
+            </div>
+            <hr class="col-6">
+            <button type="button" class="btn btn-block btn-success btn-xs" (click)="filtroData();">Filtrar</button>
+          </form>
+          
+
+        </ul>
+      </div>
       <!-- FIM DO FILTRO -->
 
       <!-- PESQUISA -->
-      <div class="btn-group pull-right" style="margin-right: 40px; margin-left: 40px">
+      <div class="btn-group pull-right">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Pesquisar</button>
 
         <ul class="dropdown-menu" role="menu">

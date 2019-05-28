@@ -1,11 +1,16 @@
 <div class="col-md-12" *ngIf="convenio">
   <div class="col-sm-12 col-xs-12">
-    <h4>
+    <h4 class="col-sm-8 col-xs-12" style="margin-left: -15px;">
         <strong>{{convenio?.NOME_CONVENIO}}</strong>
         <a class="input-remove icones-editar-excluir" (click)="deletarConvenio(convenio?.NUMERO_CONVENIO)"><i class="fa fa-close"></i></a>
       <a class="input-edit icones-editar-excluir" data-toggle="modal" (click)="setValuesConvenioForm(convenio)"
         attr.data-target="#modalEditarConvenio{{convenio?.NUMERO_CONVENIO}}"><i class="fa fa-pencil"></i></a>
     </h4>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-success" style="margin-right: -30px;" data-toggle="modal" attr.data-target="#modalExibirConvenio{{convenio?.NUMERO_CONVENIO}}">
+        Informações
+      </button>
+    </div>
   </div>
 
   <div class="col-xs-4 col-xs-12">
@@ -23,41 +28,63 @@
     <strong>Tipo: </strong> {{convenio?.TIPO_CONVENIO}}<br>
   </div>
 
-  <div class="col-xs-4 col-xs-12" *ngFor="let telefone of telefones">
-    <strong>Telefone: </strong> ({{telefone?.TELEFONE.DDD}}) {{telefone?.TELEFONE.NUMERO | telefone}}
-  </div>
+  <div class="modal fade" id="modalExibirConvenio{{convenio?.NUMERO_CONVENIO}}" tabindex="-1" role="dialog"
+  attr.aria-labelledby="modalExibirConvenio{{convenio?.NUMERO_CONVENIO}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="col-sm-12 col-sm-12" id="formTitle">
+          <h4 class="text-center"><strong>Informações de Convênio</strong></h4>
+        </div>
+          <div class="box-body">
 
-  <div class="col-xs-4 col-xs-12">
-    <strong>Endereço: </strong> {{convenio?.ENDERECO}}
+            <div class="col-xs-6 col-xs-12" *ngFor="let telefone of telefones" style="margin-top: 10px;">
+              <strong>Telefone: </strong> ({{telefone?.TELEFONE.DDD}}) {{telefone?.TELEFONE.NUMERO | telefone}}
+            </div>
+            
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Endereço: </strong> {{convenio?.ENDERECO}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Nº: </strong> {{convenio?.NUMERO}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Bairro: </strong> {{convenio?.BAIRRO}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Complemento: </strong> {{convenio?.COMPLEMENTO}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Cidade: </strong> {{convenio?.CIDADE}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Estado: </strong> {{convenio?.ESTADO}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>CEP: </strong> {{convenio?.CEP}}
+            </div>
+          
+            <div class="col-xs-6 col-xs-12" style="margin-top: 10px;">
+              <strong>Referência: </strong> {{convenio?.REFERENCIA}}
+            </div>
+            
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="col-xs-4 col-xs-12">
-    <strong>Nº: </strong> {{convenio?.NUMERO}}
-  </div>
 
-  <div class="col-xs-4 col-xs-12">
-    <strong>Bairro: </strong> {{convenio?.BAIRRO}}
-  </div>
-
-  <div class="col-xs-4 col-xs-12">
-    <strong>Complemento: </strong> {{convenio?.COMPLEMENTO}}
-  </div>
-
-  <div class="col-xs-4 col-xs-12">
-    <strong>Cidade: </strong> {{convenio?.CIDADE}}
-  </div>
-
-  <div class="col-xs-4 col-xs-12">
-    <strong>Estado: </strong> {{convenio?.ESTADO}}
-  </div>
-
-  <div class="col-xs-4 col-xs-12">
-    <strong>CEP: </strong> {{convenio?.CEP}}
-  </div>
-
-  <div class="col-xs-4 col-xs-12">
-    <strong>Referência: </strong> {{convenio?.REFERENCIA}}
-  </div>
+  
   <hr class="col-md-12">
 
   <!-- INICIO MODAL NOVO CONVENIO -->
