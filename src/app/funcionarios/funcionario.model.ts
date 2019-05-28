@@ -1,9 +1,12 @@
+import { CONTAINER_INDEX } from '@angular/core/src/render3/interfaces/view';
+
 export interface Funcionario {
     CODIGO_FUNCIONARIO: number,
     CARGO: string,
     DATA_ADMISSAO: string,
     DATA_DEMISSAO: string,
     PESSOA_CODIGO: number,
+   
     PESSOA: {
         CODIGO: number,
         NOME: string,
@@ -38,6 +41,11 @@ export interface Funcionario {
         CEP: string,
         REFERENCIA: string
     },
+    CONTA:{
+        CONTA: string,
+        AGENCIA:  string,
+        BANCO: string
+    }
     
 }
 
@@ -97,6 +105,7 @@ export interface Conta_Bancaria_Funcionario{
     CONTA: string
 }
 
+
 export interface FuncionarioQuery {
     COD_PES: number,
     NOME: string,
@@ -122,5 +131,9 @@ export interface FuncionarioQuery {
     REFERENCIA: string,
     COD_FUN: number,
     CARGO: string,
-    DATA_ADMISSAO: string
+    DATA_ADMISSAO: string,
+    BANCO: string,
+    AGENCIA: string,
+    CONTA: string
+    
 }

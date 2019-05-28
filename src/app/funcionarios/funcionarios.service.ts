@@ -4,13 +4,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/forkJoin'
-import { Funcionario, Pessoa, Conta_Bancaria_Funcionario, Telefone, Telefone_Pessoa, Endereco, Endereco_Pessoa, FuncionarioQuery, Usuario } from './funcionario.model';
+import { Funcionario, Pessoa, Conta_Bancaria_Funcionario, Telefone, Telefone_Pessoa, Endereco, Endereco_Pessoa, FuncionarioQuery, Usuario} from './funcionario.model';
 import { RequestOptions, ResponseContentType } from '@angular/http';
 
-let codF
+
 @Injectable()
 export class FuncionariosService {
-
+    codF
     constructor(private http: HttpClient) { }
 
     funcionarios(): Observable<Funcionario[]> {
@@ -49,9 +49,13 @@ export class FuncionariosService {
 
     funcionarioQuery(id: string): Observable<FuncionarioQuery[]> {
         return this.http.get<FuncionarioQuery[]>(`${SALV_API}/funcionario-full/${id}`)
+        
     }
 
-    createNewEmployee(pessoa: Pessoa, telefone: Telefone, endereco: Endereco, funcionario: Funcionario) {
+   
+
+    createNewEmployee(pessoa: Pessoa, telefone: Telefone, endereco: Endereco, funcionario: Funcionario ) {
+       
         return this.http.post<Pessoa>(`${SALV_API}/pessoa`, pessoa).switchMap(resPessoa => {
             delete funcionario.PESSOA
             return this.http.post<Telefone>(`${SALV_API}/telefone`, telefone).switchMap(resTelefone => {
@@ -70,10 +74,13 @@ export class FuncionariosService {
                             PESSOA_CODIGO: resPessoa.CODIGO,
                             ENDERECO_CODIGO: resEndereco.CODIGO
                         }
+                        
                         return this.http.post<Endereco_Pessoa>(`${SALV_API}/endereco_pessoa`, _rel_end_pes).switchMap(resEP => {
                             funcionario.PESSOA_CODIGO = resPessoa.CODIGO
-                            codF = funcionario.PESSOA_CODIGO 
+                            this.codF = funcionario.PESSOA_CODIGO 
                             return this.http.post<Funcionario>(`${SALV_API}/funcionario`, funcionario)
+
+                         
                         })
 
                     })
@@ -81,6 +88,8 @@ export class FuncionariosService {
 
                     })
                 })
+                
+                
             })
       
     }
@@ -118,15 +127,13 @@ export class FuncionariosService {
     }
 
     novaContaBancaria(_cod_fun: number, conta: Conta_Bancaria_Funcionario){
-        let _newContaBancaria = {
-            CODIGO_FUNCIONARIO: _cod_fun,
-            BANCO: conta.BANCO,
-            AGENCIA: conta.AGENCIA,
-            CONTA: conta.CONTA
-        }
-      return this.http.post<Conta_Bancaria_Funcionario>(`${SALV_API}/conta-bancaria-funcionario`,  _newContaBancaria)
+      conta.CODIGO_FUNCIONARIO = _cod_fun
+      return this.http.post<any>(`${SALV_API}/conta-bancaria-funcionario`, conta)
         
     }
+
+   
+
 
     novoEndereco(_cod_pes: number, endereco: Endereco) {
         return this.http.post<Endereco>(`${SALV_API}/endereco`, endereco).switchMap(resE => {

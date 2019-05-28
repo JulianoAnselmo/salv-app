@@ -1,5 +1,5 @@
 import { Dependente } from './infos-dependente/dependente.model';
-import { Funcionario, Telefone, Endereco } from './../funcionario.model';
+import { Funcionario, Telefone, Endereco, Conta_Bancaria_Funcionario } from './../funcionario.model';
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FuncionariosService } from '../funcionarios.service';
@@ -45,6 +45,7 @@ export class FuncionarioComponent implements OnInit {
     this.spinner.show()
     this.buscaFuncionario()
     this.buscaDependentes()
+  
 
 
     setTimeout(() => {
@@ -72,9 +73,12 @@ export class FuncionarioComponent implements OnInit {
 
   }
 
+
+
   buscaFuncionario() {
     this.fs.funcionarioById(this.route.snapshot.params['id']).subscribe(funcionario => {
       this.funcionario = funcionario
+      
     })
   }
 

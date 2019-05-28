@@ -204,7 +204,8 @@
                   autocomplete="off" maxlength="20">
               </div>
 
-
+              <button (click)="novaContaBancariaFuncionario()" style="margin-left: 10px"
+              class="btn btn-success botao pull-right">teste</button>
 
 
 
@@ -213,7 +214,7 @@
 
             <div class="col-sm-12 col-sm-12">
               <br>
-              <button (click)="novoFuncionario(novoFuncionarioForm.value); novaContaBancariaFuncionario()" style="margin-left: 10px"
+              <button (click)="novoFuncionario(novoFuncionarioForm.value)" style="margin-left: 10px"
                 class="btn btn-success botao pull-right" [disabled]="!novoFuncionarioForm.valid">Finalizar
                 cadastro</button>
             </div>

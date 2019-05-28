@@ -115,21 +115,22 @@ export class NovoFuncionarioComponent implements OnInit {
   novoFuncionario(funcionario: Funcionario) {
     this.fs.createNewEmployee(funcionario.PESSOA, funcionario.TELEFONE, funcionario.ENDERECO, funcionario)
       .subscribe(res => {
+        
         if (res['errors']) {
           res['errors'].forEach(error => {
             console.log('Houve um erro!', error)
             this.ns.notify(`Houve um erro! ${error.message}`)
           })
         } else {
-          this.codigoF = res.CODIGO_FUNCIONARIO
-          let funcionario = res.CODIGO_FUNCIONARIO
-          this.router.navigate([`/funcionarios/${funcionario}`])
-          this.ns.notify(`Funcionário inserido com sucesso!`)
+          this.fs.novaContaBancaria(res.CODIGO_FUNCIONARIO, this.novoFuncionarioForm.value.CONTA).subscribe(res =>{
+          })
+            this.router.navigate([`/funcionarios`])
+            this.ns.notify(`Funcionário inserido com sucesso!`)          
         }
       })
   }
  
-  novaContaBancariaFuncionario(conta){
+ /* novaContaBancariaFuncionario(conta){
      this.fs.novaContaBancaria(this.funcionario.CODIGO_FUNCIONARIO, this.novoFuncionarioForm.value.CONTA).subscribe(res =>{
       console.log("dados conta", conta)
       if (res['errors']) {
@@ -144,4 +145,5 @@ export class NovoFuncionarioComponent implements OnInit {
 
     })
   }
+  */
 }

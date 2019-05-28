@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Funcionario, Telefone, Endereco, Usuario } from './../../funcionario.model';
+import { Funcionario, Telefone, Endereco, Usuario, Conta_Bancaria_Funcionario } from './../../funcionario.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { FuncionariosService } from '../../funcionarios.service';
 import { NotificationService } from 'src/app/shared/notification.service';
@@ -11,7 +11,7 @@ import { UniqueValuesValidators } from 'src/app/shared/validators/unique-values/
     templateUrl: './infos-funcionario.component.html'
 })
 export class InfosFuncionarioComponent implements OnInit {
-
+    
     @Input() funcionario: Funcionario
     @Input() telefones: Telefone[] = []
     @Input() enderecos: Endereco[]
@@ -22,6 +22,7 @@ export class InfosFuncionarioComponent implements OnInit {
     updateEnderecoForm: FormGroup
     updateUsuarioForm: FormGroup
     updateFuncionarioForm: FormGroup
+    formContaBancaria: FormGroup
     codigoTelefone: number
     codigoEndereco: number
 
@@ -60,6 +61,8 @@ export class InfosFuncionarioComponent implements OnInit {
     constructor(private fs: FuncionariosService, private fb: FormBuilder, private ns: NotificationService, private dcs: DialogConfirmService, private route: ActivatedRoute, private uniqueValidators: UniqueValuesValidators) { }
 
     ngOnInit(): void {
+
+        
 
         this.novoTelefoneForm = this.fb.group({
             DDD: this.fb.control(null, []),
@@ -110,10 +113,18 @@ export class InfosFuncionarioComponent implements OnInit {
                 RELIGIAO: this.fb.control(null, []),
                 ESCOLARIDADE: this.fb.control(null, []),
                 DATA_NASCIMENTO: this.fb.control(null, []),
+                
             }),
+           
+            CONTA: this.fb.control(null, [Validators.required]),
+            BANCO: this.fb.control(null, [Validators.required]),
+            AGENCIA: this.fb.control(null, [Validators.required]),
             CARGO: this.fb.control(null, [Validators.required]),
-            DATA_ADMISSAO: this.fb.control(null, [Validators.required])
+            DATA_ADMISSAO: this.fb.control(null, [Validators.required]),
+           
         })
+
+        
 
     }
 
@@ -269,6 +280,11 @@ export class InfosFuncionarioComponent implements OnInit {
         })
     }
 
+    
+  
+    
+  
+
     updateUsuario(usuarioAtualizado) {
         this.fs.updateUsuario(this.funcionario.CODIGO_FUNCIONARIO.toString(), usuarioAtualizado).subscribe(res => {
             if (res['errors']) {
@@ -301,10 +317,14 @@ export class InfosFuncionarioComponent implements OnInit {
                     RELIGIAO: funcionario[0].RELIGIAO,
                     ESCOLARIDADE: funcionario[0].ESCOLARIDADE,
                 },
+                
+                CONTA: funcionario[0].CONTA,
+                BANCO: funcionario[0].BANCO,
+                AGENCIA: funcionario[0].AGENCIA,           
                 CARGO: funcionario[0].CARGO,
                 DATA_ADMISSAO: funcionario[0].DATA_ADMISSAO
             })
-            console.log(funcionario[0])
+            console.log(funcionario)
         })
     }
 
