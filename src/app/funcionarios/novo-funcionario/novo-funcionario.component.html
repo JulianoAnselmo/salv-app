@@ -92,6 +92,7 @@
                     max="2999-12-31">
                 </salv-input-container>
               </div>
+              
               <div class="col-sm-3 col-sm-12" style="margin-left: -9px">
                 <salv-input-container errorMessage="Campo Obrigatório" label="Cargo">
                   <span class="text-danger">*</span>
@@ -124,8 +125,34 @@
                 </salv-input-container>
               </div>
             </div>
-            <br />
+            <br/>
+            <br/> 
+            <div class="col-sm-3 col-sm-12" formGroupName="CONTA" id="inputValidator" style="margin-left:-28px">
+                <salv-input-container errorMessage="Campo Obrigatório" label="Banco">
+               <span class="text-danger">*</span>
+              <input type="text" class="form-control" formControlName="BANCO" placeholder="Banco"
+                autocomplete="off" maxlength="100">
+                </salv-input-container>
+            </div>
+
+            <div class="col-sm-3 col-sm-12" id="inputValidator" formGroupName="CONTA">
+                <salv-input-container errorMessage="Campo Obrigatório" label="Agência"> 
+              <span class="text-danger">*</span>
+              <input type="text" class="form-control" formControlName="AGENCIA" placeholder="Agência"
+                autocomplete="off" maxlength="20">
+                </salv-input-container>  
+             </div>
+
+            <div class="col-sm-3 col-sm-12" formGroupName="CONTA" id="inputValidator">
+                <salv-input-container errorMessage="Campo Obrigatório" label="Conta">
+               <span class="text-danger">*</span>
+              <input type="text" class="form-control" formControlName="CONTA" placeholder="Conta"
+                autocomplete="off" maxlength="20">
+                </salv-input-container>
+            </div>   
+            <br/><br/><br/><br/><br/><br/><br/> 
             <div class="row">
+                
               <div class="col-sm-3 col-sm-12" id="inputValidator" formGroupName="ENDERECO">
                 <salv-input-container errorMessage="Campo Obrigatório" label="Endereço">
                   <span class="text-danger">*</span>
@@ -153,7 +180,7 @@
                   autocomplete="off" maxlength="50">
               </div>
             </div>
-            <br />
+            <br/>
             <div class="row">
               <div class="col-sm-3 col-sm-12" formGroupName="ENDERECO" style="margin-left: -9.5px">
                 <salv-input-container errorMessage="Campo Obrigatório" label="Cidade">
@@ -186,26 +213,7 @@
                   autocomplete="off" maxlength="100">
               </div>
 
-              <div class="col-sm-3 col-sm-12" formGroupName="CONTA">
-                <label>Banco</label>
-                <input type="text" class="form-control" formControlName="BANCO" placeholder="Banco"
-                  autocomplete="off" maxlength="100">
-              </div>
 
-              <div class="col-sm-3 col-sm-12" formGroupName="CONTA">
-                <label>Agência</label>
-                <input type="text" class="form-control" formControlName="AGENCIA" placeholder="Agência"
-                  autocomplete="off" maxlength="20">
-              </div>
-
-              <div class="col-sm-3 col-sm-12" formGroupName="CONTA">
-                <label>Conta</label>
-                <input type="text" class="form-control" formControlName="CONTA" placeholder="Conta"
-                  autocomplete="off" maxlength="20">
-              </div>
-
-              <button (click)="novaContaBancariaFuncionario()" style="margin-left: 10px"
-              class="btn btn-success botao pull-right">teste</button>
 
 
 
