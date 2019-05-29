@@ -15,6 +15,7 @@ export class InfosFuncionarioComponent implements OnInit {
     @Input() funcionario: Funcionario
     @Input() telefones: Telefone[] = []
     @Input() enderecos: Endereco[]
+   
     novoTelefoneForm: FormGroup
     // novoEnderecoForm: FormGroup
     novoUsuarioForm: FormGroup
@@ -119,6 +120,7 @@ export class InfosFuncionarioComponent implements OnInit {
             CONTA: this.fb.control(null, [Validators.required]),
             BANCO: this.fb.control(null, [Validators.required]),
             AGENCIA: this.fb.control(null, [Validators.required]),
+        
             CARGO: this.fb.control(null, [Validators.required]),
             DATA_ADMISSAO: this.fb.control(null, [Validators.required]),
            
@@ -238,6 +240,8 @@ export class InfosFuncionarioComponent implements OnInit {
         })
     }
 
+    
+
     buscaEndereco(codEndereco) {
         this.fs.enderecoId(codEndereco).subscribe(endereco => {
             this.codigoEndereco = endereco.CODIGO
@@ -299,6 +303,7 @@ export class InfosFuncionarioComponent implements OnInit {
                     this.ns.notify('Usuário atualizado com sucesso')
                 })
             }
+            
         })
     }
 
@@ -329,7 +334,7 @@ export class InfosFuncionarioComponent implements OnInit {
     }
 
     updateFuncionario(funcionarioAtualizado) {
-        this.fs.editarFuncionario(this.funcionario.PESSOA_CODIGO.toString(), this.funcionario.CODIGO_FUNCIONARIO.toString(), funcionarioAtualizado.PESSOA, funcionarioAtualizado).subscribe(res => {
+        this.fs.editarFuncionario(this.funcionario.PESSOA_CODIGO.toString(), this.funcionario.CODIGO_FUNCIONARIO.toString(), funcionarioAtualizado.PESSOA, funcionarioAtualizado, funcionarioAtualizado.CONTA.toString()).subscribe(res => {
             if (res['errors']) {
                 res['errors'].forEach(error => {
                     console.log('Houve um erro!' + error)
@@ -346,4 +351,5 @@ export class InfosFuncionarioComponent implements OnInit {
         })
     }
 
+   
 }

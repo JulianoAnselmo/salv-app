@@ -107,12 +107,18 @@ export class FuncionariosService {
     //     })
     // }
 
-    editarFuncionario(cod_pes, cod_fun, pessoa: Pessoa, funcionario: Funcionario) {
+    editarFuncionario(cod_pes, cod_fun, pessoa: Pessoa, funcionario: Funcionario, conta: Conta_Bancaria_Funcionario) {
         delete funcionario.TELEFONE
         delete funcionario.ENDERECO
+        delete funcionario.CONTA
         return this.http.put<Pessoa>(`${SALV_API}/pessoa/${cod_pes}`, pessoa).switchMap(() => {
             delete funcionario.PESSOA
-            return this.http.put<Funcionario>(`${SALV_API}/funcionario/${cod_fun}`, funcionario)
+            return this.http.put<Funcionario>(`${SALV_API}/funcionario/${cod_fun}`, funcionario).switchMap(()=>{
+             delete funcionario.CONTA
+             return this.http.put<Conta_Bancaria_Funcionario>(`${SALV_API}/conta-bancaria-funcionario/${cod_fun}`, conta)
+            })
+            
+           
         })
     }
 
@@ -194,6 +200,10 @@ export class FuncionariosService {
 
     updateTelefone(id, telefone: Telefone) {
         return this.http.put<Telefone>(`${SALV_API}/telefone/${id}`, telefone)
+    }
+
+    updateContaBancaria(id, conta: Conta_Bancaria_Funcionario){
+        return this.http.put<Conta_Bancaria_Funcionario>(`${SALV_API}/conta-bancaria-funcionario/${id}`, conta)
     }
 
     enderecoId(id): Observable<Endereco> {

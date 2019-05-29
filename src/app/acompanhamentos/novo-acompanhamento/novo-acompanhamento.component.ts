@@ -97,17 +97,13 @@ export class NovoAcompanhamentoComponent implements OnInit {
       .subscribe(funcionarios => {
         this.spinner.hide();
         this.funcionarios = funcionarios
+        
+       
         console.log('funcionario', funcionarios)
       })
 
-
-
-
-
-
-
-
-    this.NovoAcompanhamentoService.codigoAcompanhamento().subscribe(codigo => {
+   
+      this.NovoAcompanhamentoService.codigoAcompanhamento().subscribe(codigo => {
       this.ACOMPANHAMENTO_CODIGO = codigo
 
       if (this.ACOMPANHAMENTO_CODIGO[0].ACOMPANHAMENTO_CODIGO == null) {
@@ -142,7 +138,7 @@ export class NovoAcompanhamentoComponent implements OnInit {
       displayAllSelectedText: true,
       singleSelection: false,
       idField: 'CODIGO_FUNCIONARIO',
-      textField: 'FNOME',
+      textField: 'FNOME' ,      
       selectAllText: 'Marcar todos',
       unSelectAllText: 'Desmarcar todos',
       itemsShowLimit: 5,

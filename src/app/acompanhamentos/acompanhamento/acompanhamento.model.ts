@@ -32,8 +32,8 @@ export interface AcompanhamentoQuery {
 export interface AcompanhamentoFuncionarioQuery {
  
     CODIGO_FUNCIONARIO: number,    
-    FUNCIONARIO_NOME: string
-
+    FUNCIONARIO_NOME: string,
+    CARGO: string
 }
 
 

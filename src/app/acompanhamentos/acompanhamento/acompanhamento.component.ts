@@ -78,7 +78,7 @@ export class AcompanhamentoComponent implements OnInit {
     this.acompanhamentosService.AcompanhamentoFuncionarioQuery(this.route.snapshot.params['id']).subscribe(acompanhamento_funcionario => {
       this.spinner.hide()
       this.funcionarios1 = acompanhamento_funcionario
-      console.log('funcionario', this.funcionarios)
+      console.log('funcionario',acompanhamento_funcionario)
     })
 
     this.acompanhamentosService.AcompanhamentoResidenteQuery(this.route.snapshot.params['id']).subscribe(acompanhamento_residente => {
