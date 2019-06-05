@@ -23,7 +23,6 @@ export class InfosFuncionarioComponent implements OnInit {
     updateEnderecoForm: FormGroup
     updateUsuarioForm: FormGroup
     updateFuncionarioForm: FormGroup
-    formContaBancaria: FormGroup
     codigoTelefone: number
     codigoEndereco: number
 
@@ -116,11 +115,11 @@ export class InfosFuncionarioComponent implements OnInit {
                 DATA_NASCIMENTO: this.fb.control(null, []),
                 
             }),
-           
-            CONTA: this.fb.control(null, [Validators.required]),
+            CONTA: this.fb.group({
+            CONTA: this.fb.control(null, []),
             BANCO: this.fb.control(null, [Validators.required]),
-            AGENCIA: this.fb.control(null, [Validators.required]),
-        
+            AGENCIA: this.fb.control(null, [Validators.required]),    
+        }),    
             CARGO: this.fb.control(null, [Validators.required]),
             DATA_ADMISSAO: this.fb.control(null, [Validators.required]),
            
@@ -321,11 +320,12 @@ export class InfosFuncionarioComponent implements OnInit {
                     DATA_NASCIMENTO: funcionario[0].DATA_NASCIMENTO,
                     RELIGIAO: funcionario[0].RELIGIAO,
                     ESCOLARIDADE: funcionario[0].ESCOLARIDADE,
-                },
-                
-                CONTA: funcionario[0].CONTA,
+                },                
+                CONTA: {
                 BANCO: funcionario[0].BANCO,
-                AGENCIA: funcionario[0].AGENCIA,           
+                CONTA: funcionario[0].CONTA,
+                AGENCIA: funcionario[0].AGENCIA,  
+                },         
                 CARGO: funcionario[0].CARGO,
                 DATA_ADMISSAO: funcionario[0].DATA_ADMISSAO
             })
@@ -334,7 +334,7 @@ export class InfosFuncionarioComponent implements OnInit {
     }
 
     updateFuncionario(funcionarioAtualizado) {
-        this.fs.editarFuncionario(this.funcionario.PESSOA_CODIGO.toString(), this.funcionario.CODIGO_FUNCIONARIO.toString(), funcionarioAtualizado.PESSOA, funcionarioAtualizado, funcionarioAtualizado.CONTA.toString()).subscribe(res => {
+        this.fs.editarFuncionario(this.funcionario.PESSOA_CODIGO.toString(), this.funcionario.CODIGO_FUNCIONARIO.toString(), funcionarioAtualizado.PESSOA, funcionarioAtualizado, funcionarioAtualizado.CONTA).subscribe(res => {
             if (res['errors']) {
                 res['errors'].forEach(error => {
                     console.log('Houve um erro!' + error)

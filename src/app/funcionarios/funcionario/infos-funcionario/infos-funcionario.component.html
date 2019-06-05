@@ -45,11 +45,7 @@
         <div class="col-xs-4 col-xs-12">
           <strong>Escolaridade: </strong> {{funcionario?.PESSOA.ESCOLARIDADE | escolaridade}}
           <br>
-        </div>
-
-
-
-       
+        </div>       
 
       </div>
 
@@ -69,7 +65,7 @@
                       </div>
                       <div class="row">
                         <div class="col-sm-6 col-sm-12" id="inputValidator" formGroupName="PESSOA">
-                          <salv-input-container errorMessage="Campo Obrgatório" label="Nome">
+                          <salv-input-container errorMessage="Campo Obrigatório" label="Nome">
                               <span class="text-danger">*</span>
                             <input type="text" class="form-control" formControlName="NOME" placeholder="Nome"
                               autocomplete="off" maxlength="50">
@@ -83,7 +79,7 @@
                           </salv-input-container>
                         </div>
                         <div class="col-sm-6 col-sm-12" id="inputValidator" formGroupName="PESSOA">
-                          <salv-input-container errorMessage="Minimo 11 caracteres" label="CPF">
+                          <salv-input-container errorMessage="Minímo 11 caracteres" label="CPF">
                               <span class="text-danger">*</span>
                             <input type="text" mask="000.000.000-00" class="form-control" formControlName="CPF"
                               placeholder="CPF" autocomplete="off" maxlength="15">
@@ -151,24 +147,27 @@
                             <input type="date" class="form-control pull-right" id="datepicker"
                               formControlName="DATA_ADMISSAO" max="2999-12-31">
                           </salv-input-container>
-                        </div>
+                        </div>                        
 
-                        <div class="col-sm-6 col-sm-12" style="margin-left: -10px">
-                          <salv-input-container errorMessage="Campo Obrigatório" label="Conta bancária">
-                              <span class="text-danger">*</span>
-                            <input type="text" class="form-control" formControlName="CONTA" placeholder="Conta"
-                              autocomplete="off" maxlength="50">
-                          </salv-input-container>
-                        </div>
+                       
 
-                        <div class="col-sm-6 col-sm-12" style="margin-left: -10px">
+                        <div class="col-sm-6 col-sm-12" style="margin-left: -10px" formGroupName="CONTA">
                           <salv-input-container errorMessage="Campo Obrigatório" label="Agência">
                               <span class="text-danger">*</span>
                             <input type="text" class="form-control" formControlName="AGENCIA" placeholder="Agencia"
                               autocomplete="off" maxlength="50">
                           </salv-input-container>
                         </div>
-                        <div class="col-sm-6 col-sm-12" style="margin-left: -10px">
+
+                        <div class="col-sm-6 col-sm-12" style="margin-left: -10px" formGroupName="CONTA">
+                          <salv-input-container errorMessage="Campo Obrigatório" label="Conta">
+                              <span class="text-danger">*</span>
+                            <input type="text" class="form-control" formControlName="CONTA" placeholder="Conta"
+                              autocomplete="off" maxlength="50">
+                          </salv-input-container>
+                        </div>
+
+                        <div class="col-sm-6 col-sm-12" style="margin-left: -10px" formGroupName="CONTA">
                           <salv-input-container errorMessage="Campo Obrigatório" label="Banco">
                               <span class="text-danger">*</span>
                             <input type="text" class="form-control" formControlName="BANCO" placeholder="Banco"
@@ -515,20 +514,23 @@
                 <strong>Informações funcionais</strong>
               </h4>
             </div>
-
-            <div class="col-xs-4 col-xs-12" style="margin-left: -25px">
-              <strong>Conta Bancaria: </strong> {{funcionario?.CONTA.CONTA}}
-              <br>
-            </div>
-    
+            
+            
             <div class="col-xs-4 col-xs-12" style="margin-left: -25px">
               <strong>Agencia: </strong> {{funcionario?.CONTA.AGENCIA}}
               <br>
             </div>
+            
+            <div class="col-xs-4 col-xs-12" style="margin-left: -25px">
+              <strong>Conta Bancaria: </strong> {{funcionario?.CONTA.CONTA}}
+              <br>
+            </div>
+
             <div class="col-xs-4 col-xs-12" style="margin-left: -25px">
               <strong>Banco: </strong> {{funcionario?.CONTA.BANCO}}
               <br>
             </div>
+            
             <div class="col-xs-4 col-xs-12" style="margin-left: -25px">
               <strong>Cargo: </strong> {{funcionario?.CARGO}}
               <br>
